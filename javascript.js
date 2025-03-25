@@ -1,5 +1,9 @@
 let total = 0;
 let greatTotal = 0;
+let seven;
+let eight;
+let nine;
+let sumSeven;
 
 function clean(){
     document.getElementById('enter').value='0';    
@@ -13,5 +17,20 @@ function pressPerCent(){
 }
 
 function pressSeven(){
-    document.getElementById('enter').value="7";
+    
+    seven = document.getElementById('enter').value;
+    console.log(seven);
+    sumSeven = ("7"+seven)
+    document.getElementById('enter').sumSeven;
+    
+
+
+}
+
+function pressEight(){
+    document.getElementById('enter').value="8";
+}
+
+function pressNine(){
+    document.getElementById('enter').value="9";
 }
