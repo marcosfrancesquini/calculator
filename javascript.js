@@ -21,7 +21,8 @@ function pressSeven(){
     seven = document.getElementById('enter').value;
     console.log(seven);
     sumSeven = ("7"+seven)
-    document.getElementById('enter').sumSeven;
+    console.log(sumSeven);
+    document.getElementById('enter').value=sumSeven;
     
 
 
