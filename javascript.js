@@ -16,16 +16,12 @@ function pressPerCent() {
 
 function pressOne() {
     one = document.getElementById('enter').value;
-    sumOne = (one + "1")
-    console.log(one);
     if (one === "0") {
-        document.getElementById('enter').value = '';
-        console.log(document.getElementById('enter').value)
-        document.getElementById('enter').value = sumOne;
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "1";
     } else {
-        document.getElementById('enter').value = sumOne;
+        document.getElementById('enter').value = one + "1";
     }
-
 }
 
 function pressTwo() {
