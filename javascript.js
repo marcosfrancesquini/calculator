@@ -26,54 +26,90 @@ function pressOne() {
 
 function pressTwo() {
     two = document.getElementById('enter').value;
-    sumTwo = (two + "2")
-    document.getElementById('enter').value = sumTwo;
+    if (two === "0") {
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "2";
+    } else {
+        document.getElementById('enter').value = two + "2";
+    }
 }
 
 function pressThree() {
     three = document.getElementById('enter').value;
-    sumThree = (three + "3")
-    document.getElementById('enter').value = sumThree;
+    if (three === "0") {
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "3";
+    } else {
+        document.getElementById('enter').value = three + "3";
+    }
 }
 
 function pressFour() {
     four = document.getElementById('enter').value;
-    sumFour = (four + "4")
-    document.getElementById('enter').value = sumFour;
+    if (four === "0") {
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "4";
+    } else {
+        document.getElementById('enter').value = four + "4";
+    }
 }
 
 function pressFive() {
     five = document.getElementById('enter').value;
-    sumFive = (five + "5")
-    document.getElementById('enter').value = sumFive;
+    if (five === "0") {
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "5";
+    } else {
+        document.getElementById('enter').value = five + "5";
+    }
 }
 
 function pressSix() {
     six = document.getElementById('enter').value;
-    sumSix = (six + "6")
-    document.getElementById('enter').value = sumSix;
+    if (six === "0") {
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "6";
+    } else {
+        document.getElementById('enter').value = six + "6";
+    }    
 }
 
 function pressSeven() {
     seven = document.getElementById('enter').value;
-    sumSeven = (seven + "7")
-    document.getElementById('enter').value = sumSeven;
+    if (seven === "0") {
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "7";
+    } else {
+        document.getElementById('enter').value = seven + "7";
+    }
 }
 
-function pressEight() {
+function pressEight() {    
     eight = document.getElementById('enter').value;
-    sumEight = (eight + "8")
-    document.getElementById('enter').value = sumEight;
+    if (eight === "0") {
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "8";
+    } else {
+        document.getElementById('enter').value = eight + "8";
+    }
 }
 
 function pressNine() {
     nine = document.getElementById('enter').value;
-    sumNine = (nine + "9")
-    document.getElementById('enter').value = sumNine;
+    if (nine === "0") {
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "9";
+    } else {
+        document.getElementById('enter').value = nine + "9";
+    }
 }
 
 function pressZero() {
     zero = document.getElementById('enter').value;
-    sumZero = (zero + "0")
-    document.getElementById('enter').value = sumZero;
+    if (zero === "0") {
+        document.getElementById('enter').value = '';                
+        document.getElementById('enter').value = "0";
+    } else {
+        document.getElementById('enter').value = zero + "0";
+    }    
 }
