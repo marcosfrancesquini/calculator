@@ -9,6 +9,20 @@ function clean() {
     let greatTotal = 0;
 }
 
+function pressMinus() {
+    minus = document.getElementById('enter').value;
+    if (document.getElementById('enter').value !== "0") {
+        document.getElementById('enter').value = minus + "-";
+    }
+}
+
+function pressPlus() {
+    plus = document.getElementById('enter').value;
+    if (document.getElementById('enter').value !== "0") {
+        document.getElementById('enter').value = plus + "+";        
+    }    
+}
+
 function pressPerCent() {
     document.getElementById('enter').value = "%";
     //let value = document.getElementById('percentage').value;
