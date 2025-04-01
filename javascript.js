@@ -24,8 +24,17 @@ function pressPlus() {
 }
 
 function pressPerCent() {
-    document.getElementById('enter').value = "%";
-    //let value = document.getElementById('percentage').value;
+    percent = document.getElementById('enter').value;
+    if (document.getElementById('enter').value !== "0") {
+        document.getElementById('enter').value = percent + "%";
+    }    
+}
+
+function pressPeriod() {
+    period = document.getElementById('enter').value;
+    if (document.getElementById('enter').value !== "0") {
+        document.getElementById('enter').value = period + ".";
+    }
 }
 
 function pressOne() {
