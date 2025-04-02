@@ -9,6 +9,13 @@ function clean() {
     let greatTotal = 0;
 }
 
+function pressTimes() {
+    times = document.getElementById('enter').value;
+    if (document.getElementById('enter').value !== "0") {
+        document.getElementById('enter').value = times + "X";
+    }
+}
+
 function pressMinus() {
     minus = document.getElementById('enter').value;
     if (document.getElementById('enter').value !== "0") {
