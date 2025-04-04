@@ -16,6 +16,15 @@ function pressTimes() {
     }
 }
 
+function pressArrow() {
+    arrow = document.getElementById('enter').value;
+    if (document.getElementById('enter').value !== "0") {
+        let lastCharRemoved = arrow.slice(0, -1);
+        console.log(lastCharRemoved);
+        document.getElementById('enter').value = lastCharRemoved;        
+    }
+}
+
 function pressMinus() {
     minus = document.getElementById('enter').value;
     if (document.getElementById('enter').value !== "0") {
