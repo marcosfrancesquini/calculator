@@ -9,6 +9,13 @@ function clean() {
     let greatTotal = 0;
 }
 
+function pressDivide() {
+      divide = document.getElementById('enter').value;
+         if (document.getElementById('enter').value !== "0") {
+            document.getElementById('enter').value = divide + "/";
+        }     
+}
+
 function pressTimes() {
     times = document.getElementById('enter').value;
     if (document.getElementById('enter').value !== "0") {
