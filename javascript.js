@@ -9,6 +9,17 @@ function clean() {
     let greatTotal = 0;
 }
 
+function pressNegativePositive() {
+    let negativePositive = document.getElementById('enter').value;
+    if (negativePositive !== "0") {
+        if (negativePositive.charAt(0) === "-") {
+            document.getElementById('enter').value = negativePositive.slice(1);
+        } else {
+            document.getElementById('enter').value = "-" + negativePositive;
+        }
+    }    
+}
+
 function pressDivide() {
       divide = document.getElementById('enter').value;
          if (document.getElementById('enter').value !== "0") {
