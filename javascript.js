@@ -10,16 +10,21 @@ function clean() {
 }
 
 function pressNegativePositive() {
-    let negativePositive = document.getElementById('enter').value;
-    if (negativePositive !== "0") {
-        if (negativePositive.charAt(0) === "-") {
-            document.getElementById('enter').value = negativePositive.slice(1);
-        } else {
-            document.getElementById('enter').value = "-" + negativePositive;
-        }
-    }    
-}
+    let inputElement = document.getElementById('enter');
+    let value = inputElement.value;
 
+    // Verifica se o valor é uma string vazia ou contém apenas '0'
+    if (value !== "" && value !== "0") {
+        // Verifica se o valor já é um número negativo entre parênteses
+        if (value.startsWith('-(') && value.endsWith(')')) {
+            // Remove o sinal negativo e os parênteses
+            inputElement.value = value.substring(2, value.length - 1);
+        } else {
+            // Adiciona o sinal negativo com parênteses se não for um número negativo
+            inputElement.value = "-(" + value + ")";
+        }
+    }
+}
 function pressDivide() {
       divide = document.getElementById('enter').value;
          if (document.getElementById('enter').value !== "0") {
