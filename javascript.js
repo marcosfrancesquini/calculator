@@ -12,19 +12,30 @@ function clean() {
 function pressNegativePositive() {
     let inputElement = document.getElementById('enter');
     let value = inputElement.value;
+    let lastChar = value[value.length - 1];
 
-    // Verifica se o valor é uma string vazia ou contém apenas '0'
-    if (value !== "" && value !== "0") {
-        // Verifica se o valor já é um número negativo entre parênteses
-        if (value.startsWith('-(') && value.endsWith(')')) {
-            // Remove o sinal negativo e os parênteses
+   
+    if (value !== "" && value !== "0") {     
+        
+        if (value.endsWith(')')) {            
             inputElement.value = value.substring(2, value.length - 1);
         } else {
-            // Adiciona o sinal negativo com parênteses se não for um número negativo
-            inputElement.value = "-(" + value + ")";
+            // Pega o último caractere da string       
+            
+            // Verifica se o último caractere é um dígito (número)
+            if (!isNaN(lastChar) || lastChar === '.') {
+                // Adiciona o sinal negativo com parênteses
+                inputElement.value = "-(" + value + ")";
+            } else {
+                // Se o último caractere não é um número, não faz nada
+                // Você pode adicionar um console.log ou outra ação para debug, se necessário
+                console.log("O último caractere não é um número.");
+            }
         }
     }
 }
+
+
 function pressDivide() {
       divide = document.getElementById('enter').value;
          if (document.getElementById('enter').value !== "0") {
@@ -35,7 +46,7 @@ function pressDivide() {
 function pressTimes() {
     times = document.getElementById('enter').value;
     if (document.getElementById('enter').value !== "0") {
-        document.getElementById('enter').value = times + "X";
+        document.getElementById('enter').value = times + "x";
     }
 }
 
