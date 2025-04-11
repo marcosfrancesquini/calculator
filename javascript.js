@@ -3,6 +3,15 @@ let greatTotal = 0;
 let one, two, three, four, five, six, seven, eight, nine, zero;
 let sumOne, sumTwo, sumThree, sumFour, sumFive, sumSix, sumSeven, sumEight, sumNine, sumZero;
 
+
+function checkChars(str) {
+    const strToString = (str.split(''));
+   // console.log(strToString);
+    //return strToString;
+    const reversedString = strToString.reverse();
+    console.log(reversedString);
+}
+
 function clean() {
     document.getElementById('enter').value = '0';
     let total = 0;
@@ -13,34 +22,28 @@ function pressNegativePositive() {
     let inputElement = document.getElementById('enter');
     let value = inputElement.value;
     let lastChar = value[value.length - 1];
-
-   
-    if (value !== "" && value !== "0") {     
-        
-        if (value.endsWith(')')) {            
+    checkChars(value);
+    
+    if (value !== "" && value !== "0") {
+        if (value.endsWith(')')) {
             inputElement.value = value.substring(2, value.length - 1);
         } else {
-            // Pega o último caractere da string       
-            
-            // Verifica se o último caractere é um dígito (número)
             if (!isNaN(lastChar) || lastChar === '.') {
-                // Adiciona o sinal negativo com parênteses
                 inputElement.value = "-(" + value + ")";
             } else {
-                // Se o último caractere não é um número, não faz nada
-                // Você pode adicionar um console.log ou outra ação para debug, se necessário
                 console.log("O último caractere não é um número.");
             }
         }
     }
+
 }
 
 
 function pressDivide() {
-      divide = document.getElementById('enter').value;
-         if (document.getElementById('enter').value !== "0") {
-            document.getElementById('enter').value = divide + "/";
-        }     
+    divide = document.getElementById('enter').value;
+    if (document.getElementById('enter').value !== "0") {
+        document.getElementById('enter').value = divide + "/";
+    }
 }
 
 function pressTimes() {
@@ -53,7 +56,7 @@ function pressTimes() {
 function pressArrow() {
     arrow = document.getElementById('enter').value;
     if (arrow.length <= 1) {
-        document.getElementById('enter').value = "0";  
+        document.getElementById('enter').value = "0";
     }
 
     if (document.getElementById('enter').value !== "0") {
