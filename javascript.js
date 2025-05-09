@@ -2,12 +2,11 @@ let total = 0;
 let greatTotal = 0;
 let one, two, three, four, five, six, seven, eight, nine, zero;
 let sumOne, sumTwo, sumThree, sumFour, sumFive, sumSix, sumSeven, sumEight, sumNine, sumZero;
-
+// let value = inputElement.value;
+// let lastChar = value[value.length - 1];
 
 function checkChars(str) {
     const strToString = (str.split(''));
-   // console.log(strToString);
-    //return strToString;
     const reversedString = strToString.reverse();
     console.log(reversedString);
 }
@@ -23,18 +22,27 @@ function pressNegativePositive() {
     let value = inputElement.value;
     let lastChar = value[value.length - 1];
     checkChars(value);
+    console.log(checkChars(value));
     
     if (value !== "" && value !== "0") {
         if (value.endsWith(')')) {
             inputElement.value = value.substring(2, value.length - 1);
         } else {
             if (!isNaN(lastChar) || lastChar === '.') {
+                console.log("!isNaN(lastChar)-> "+!isNaN(lastChar))
                 inputElement.value = "-(" + value + ")";
             } else {
                 console.log("O último caractere não é um número.");
             }
         }
-    }
+    }   
+
+}
+
+function pressEqual(){
+    let equal = document.getElementById('enter').value;
+    document.getElementById('enter').value = '0';
+    document.getElementById('enter').value = eval(equal);
 
 }
 
@@ -49,7 +57,7 @@ function pressDivide() {
 function pressTimes() {
     times = document.getElementById('enter').value;
     if (document.getElementById('enter').value !== "0") {
-        document.getElementById('enter').value = times + "x";
+        document.getElementById('enter').value = times + "*";
     }
 }
 
