@@ -4,6 +4,8 @@ let one, two, three, four, five, six, seven, eight, nine, zero;
 let sumOne, sumTwo, sumThree, sumFour, sumFive, sumSix, sumSeven, sumEight, sumNine, sumZero;
 // let value = inputElement.value;
 // let lastChar = value[value.length - 1];
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.2.0/math.js"
+
 
 function checkChars(str) {
     const strToString = (str.split(''));
@@ -22,7 +24,7 @@ function pressNegativePositive() {
     let value = inputElement.value;
     let lastChar = value[value.length - 1];
     checkChars(value);
-    console.log(checkChars(value));
+    //  console.log(checkChars(value));
     
     if (value !== "" && value !== "0") {
         if (value.endsWith(')')) {
@@ -41,9 +43,9 @@ function pressNegativePositive() {
 
 function pressEqual(){
     let equal = document.getElementById('enter').value;
+   // console.log(eval("9*10%"));
     document.getElementById('enter').value = '0';
-    document.getElementById('enter').value = eval(equal);
-
+    document.getElementById('enter').value = math.evaluate(equal);
 }
 
 
