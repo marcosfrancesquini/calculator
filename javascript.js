@@ -41,6 +41,45 @@ function pressNegativePositive() {
 
 }
 
+//Versão IA Revisar
+// function pressNegativePositive() {
+//     let inputElement = document.getElementById('enter');
+//     let value = inputElement.value;
+
+//     // Regex para encontrar o último número ou expressão entre parênteses
+//     const regex = /([+\-*/])\s*(-?\(?\d+\.?\d*\)?)(?!.*[+\-*/])/;
+//     const match = value.match(regex);
+
+//     if (match) {
+//         let operator = match[1];
+//         let number = match[2];
+
+//         // Verifica se já está negativo (formato -(...))
+//         if (number.startsWith('-(') && number.endsWith(')')) {
+//             // Remove o -() para voltar ao positivo
+//             number = number.slice(2, -1);
+//         } else if (number.startsWith('-')) {
+//             // Caso especial: já negativo, mas não está entre parênteses
+//             number = number.slice(1);
+//         } else {
+//             // Coloca em formato negativo
+//             number = '-(' + number + ')';
+//         }
+
+//         // Substitui apenas a última ocorrência usando regex
+//         inputElement.value = value.replace(regex, operator + number);
+//     } else {
+//         // Caso não encontre operador, tenta inverter tudo
+//         if (value.startsWith('-(') && value.endsWith(')')) {
+//             inputElement.value = value.slice(2, -1);
+//         } else if (value.startsWith('-')) {
+//             inputElement.value = value.slice(1);
+//         } else if (value.length > 0) {
+//             inputElement.value = '-(' + value + ')';
+//         }
+//     }
+}
+
 function pressEqual(){
     let equal = document.getElementById('enter').value;
    // console.log(eval("9*10%"));
