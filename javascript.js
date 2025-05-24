@@ -4,8 +4,6 @@ let one, two, three, four, five, six, seven, eight, nine, zero;
 let sumOne, sumTwo, sumThree, sumFour, sumFive, sumSix, sumSeven, sumEight, sumNine, sumZero;
 // let value = inputElement.value;
 // let lastChar = value[value.length - 1];
-src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.2.0/math.js"
-
 
 function checkChars(str) {
     const strToString = (str.split(''));
@@ -24,7 +22,7 @@ function pressNegativePositive() {
     let value = inputElement.value;
     let lastChar = value[value.length - 1];
     checkChars(value);
-    //  console.log(checkChars(value));
+    console.log(checkChars(value));
     
     if (value !== "" && value !== "0") {
         if (value.endsWith(')')) {
@@ -41,66 +39,57 @@ function pressNegativePositive() {
 
 }
 
-//Versão IA Revisar
-// function pressNegativePositive() {
-//     let inputElement = document.getElementById('enter');
-//     let value = inputElement.value;
-
-//     // Regex para encontrar o último número ou expressão entre parênteses
-//     const regex = /([+\-*/])\s*(-?\(?\d+\.?\d*\)?)(?!.*[+\-*/])/;
-//     const match = value.match(regex);
-
-//     if (match) {
-//         let operator = match[1];
-//         let number = match[2];
-
-//         // Verifica se já está negativo (formato -(...))
-//         if (number.startsWith('-(') && number.endsWith(')')) {
-//             // Remove o -() para voltar ao positivo
-//             number = number.slice(2, -1);
-//         } else if (number.startsWith('-')) {
-//             // Caso especial: já negativo, mas não está entre parênteses
-//             number = number.slice(1);
-//         } else {
-//             // Coloca em formato negativo
-//             number = '-(' + number + ')';
-//         }
-
-//         // Substitui apenas a última ocorrência usando regex
-//         inputElement.value = value.replace(regex, operator + number);
-//     } else {
-//         // Caso não encontre operador, tenta inverter tudo
-//         if (value.startsWith('-(') && value.endsWith(')')) {
-//             inputElement.value = value.slice(2, -1);
-//         } else if (value.startsWith('-')) {
-//             inputElement.value = value.slice(1);
-//         } else if (value.length > 0) {
-//             inputElement.value = '-(' + value + ')';
-//         }
-//     }
-}
-
-function pressEqual(){
-    let equal = document.getElementById('enter').value;
-   // console.log(eval("9*10%"));
-    document.getElementById('enter').value = '0';
-    document.getElementById('enter').value = math.evaluate(equal);
-}
-
-
-function pressDivide() {
-    divide = document.getElementById('enter').value;
-    if (document.getElementById('enter').value !== "0") {
-        document.getElementById('enter').value = divide + "/";
+function pressOperator(operator) {
+    let currentValue = document.getElementById('enter').value;
+    let lastChar = currentValue[currentValue.length - 1];
+    if (currentValue !== "0" && !/[+\-*/%]/.test(lastChar)) {
+        document.getElementById('enter').value = currentValue + operator;
+    }
+    else if (/[+\-*/%]/.test(lastChar)) {
+        document.getElementById('enter').value = currentValue.slice(0, -1) + operator;
     }
 }
 
-function pressTimes() {
-    times = document.getElementById('enter').value;
-    if (document.getElementById('enter').value !== "0") {
-        document.getElementById('enter').value = times + "*";
+function pressNumber(number) {
+    let typed = document.getElementById('enter').value;
+    let lastChar = typed[typed.length - 1];
+
+    if (typed === "0") {
+        document.getElementById('enter').value = number;
+    } 
+    else {
+        // Esse regex aqui, verifica se o último caractere é um operador ou parêntese aberto
+        if (/[+\-*/(]/.test(lastChar)) {
+            document.getElementById('enter').value = typed + number;
+        }
+        else if (lastChar === '.') {
+            if (!typed.split(/[+\-*/]/).pop().includes('.')) {
+                document.getElementById('enter').value = typed + number;
+            }
+        }
+        else {
+            document.getElementById('enter').value = typed + number;
+        }
     }
 }
+
+function pressOne() { pressNumber('1'); };
+function pressTwo() { pressNumber('2'); };
+function pressThree() { pressNumber('3'); };
+function pressFour() { pressNumber('4'); };
+function pressFive() { pressNumber('5'); };
+function pressSix() { pressNumber('6'); };
+function pressSeven() { pressNumber('7'); };
+function pressEight() { pressNumber('8'); };
+function pressNine() { pressNumber('9'); };
+function pressZero() { pressNumber('0'); };
+
+function pressTimes() { pressOperator('*'); }
+function pressMinus() { pressOperator('-'); }
+function pressPlus() { pressOperator('+'); }
+function pressPerCent() { pressOperator('%'); }
+function pressDivide() { pressOperator('/'); }
+
 
 function pressArrow() {
     arrow = document.getElementById('enter').value;
@@ -115,130 +104,4 @@ function pressArrow() {
     }
 }
 
-function pressMinus() {
-    minus = document.getElementById('enter').value;
-    if (document.getElementById('enter').value !== "0") {
-        document.getElementById('enter').value = minus + "-";
-    }
-}
-
-function pressPlus() {
-    plus = document.getElementById('enter').value;
-    if (document.getElementById('enter').value !== "0") {
-        document.getElementById('enter').value = plus + "+";
-    }
-}
-
-function pressPerCent() {
-    percent = document.getElementById('enter').value;
-    if (document.getElementById('enter').value !== "0") {
-        document.getElementById('enter').value = percent + "%";
-    }
-}
-
-function pressPeriod() {
-    period = document.getElementById('enter').value;
-    if (document.getElementById('enter').value !== "0") {
-        document.getElementById('enter').value = period + ".";
-    }
-}
-
-function pressOne() {
-    one = document.getElementById('enter').value;
-    if (one === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "1";
-    } else {
-        document.getElementById('enter').value = one + "1";
-    }
-}
-
-function pressTwo() {
-    two = document.getElementById('enter').value;
-    if (two === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "2";
-    } else {
-        document.getElementById('enter').value = two + "2";
-    }
-}
-
-function pressThree() {
-    three = document.getElementById('enter').value;
-    if (three === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "3";
-    } else {
-        document.getElementById('enter').value = three + "3";
-    }
-}
-
-function pressFour() {
-    four = document.getElementById('enter').value;
-    if (four === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "4";
-    } else {
-        document.getElementById('enter').value = four + "4";
-    }
-}
-
-function pressFive() {
-    five = document.getElementById('enter').value;
-    if (five === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "5";
-    } else {
-        document.getElementById('enter').value = five + "5";
-    }
-}
-
-function pressSix() {
-    six = document.getElementById('enter').value;
-    if (six === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "6";
-    } else {
-        document.getElementById('enter').value = six + "6";
-    }
-}
-
-function pressSeven() {
-    seven = document.getElementById('enter').value;
-    if (seven === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "7";
-    } else {
-        document.getElementById('enter').value = seven + "7";
-    }
-}
-
-function pressEight() {
-    eight = document.getElementById('enter').value;
-    if (eight === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "8";
-    } else {
-        document.getElementById('enter').value = eight + "8";
-    }
-}
-
-function pressNine() {
-    nine = document.getElementById('enter').value;
-    if (nine === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "9";
-    } else {
-        document.getElementById('enter').value = nine + "9";
-    }
-}
-
-function pressZero() {
-    zero = document.getElementById('enter').value;
-    if (zero === "0") {
-        document.getElementById('enter').value = '';
-        document.getElementById('enter').value = "0";
-    } else {
-        document.getElementById('enter').value = zero + "0";
-    }
-}
+f
