@@ -5,6 +5,71 @@ let sumOne, sumTwo, sumThree, sumFour, sumFive, sumSix, sumSeven, sumEight, sumN
 // let value = inputElement.value;
 // let lastChar = value[value.length - 1];
 
+
+//parte do audio que fala
+
+// const botoes = {
+//     'one': 'um',
+//     'two': 'dois',
+//     'plus': 'mais',
+//     'equal': 'igual'
+//     // Adicione todos os outros...
+// };
+
+// // Aplica a todos os botões mapeados
+// Object.keys(botoes).forEach(id => {
+//     const botao = document.getElementById(id);
+//     if (botao) {
+//         botao.addEventListener('mouseenter', () => playAudio(botoes[id]));
+//     }
+// });
+
+// // function playAudio(numero) {
+// //     const audio = new Audio(`audios/${numero}.mp3`);
+// //     audio.play().catch(e => console.log("Erro ao tocar áudio:", e));
+// // }
+// // document.getElementById('one').addEventListener('mouseenter', () => playAudio('um'));
+
+// const audios = {};
+// Object.keys(botoes).forEach(id => {
+//     audios[botoes[id]] = new Audio(`audios/${botoes[id]}.mp3`);
+// });
+
+// function playAudio(numero) {
+//     audios[numero]?.play().catch(e => console.log("Erro ao tocar áudio:", e));
+// }
+
+function playAudio(nome) {
+    const audio = new Audio(`audios/${nome}.mp3`);
+    audio.play().catch(e => console.log("Erro ao tocar:", e));
+}
+
+// Mapeamento dos botões para áudios
+const botoes = {
+    'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5',
+    'six': '6', 'seven': '7', 'eight': '8', 'nine': '9', 'zero': '0',
+    'plus': 'mais', 'minus': 'menos', 'times': 'multiplica',
+    'divide': 'divide', 'equal': 'igual', 'clean': 'limpa',
+    'percentage': 'porcento', 'neg_pos': 'negativo', 'period': 'ponto'
+};
+
+// Adiciona eventos de hover a todos os botões
+Object.keys(botoes).forEach(id => {
+    const botao = document.getElementById(id);
+    if (botao) {
+        botao.addEventListener('mouseenter', () => playAudio(botoes[id]));
+    }
+});
+function pressEqual() {
+    try {
+        let expression = document.getElementById('enter').value;
+        expression = expression.replace(/%/g, '/100');
+        document.getElementById('enter').value = eval(expression) || '0';
+    } catch {
+        document.getElementById('enter').value = 'Erro';
+    }
+}
+
 function checkChars(str) {
     const strToString = (str.split(''));
     const reversedString = strToString.reverse();
@@ -36,7 +101,27 @@ function pressNegativePositive() {
             }
         }
     }   
+}
 
+function pressArrow() {
+    arrow = document.getElementById('enter').value;
+    if (arrow.length <= 1) {
+        document.getElementById('enter').value = "0";
+    }
+
+    if (document.getElementById('enter').value !== "0") {
+        let lastCharRemoved = arrow.slice(0, -1);
+        console.log(lastCharRemoved);
+        document.getElementById('enter').value = lastCharRemoved;
+    }
+}
+
+function pressPeriod() {
+    let currentValue = document.getElementById('enter').value;
+    let lastNumber = currentValue.split(/[+\-*/%]/).pop();
+    if (!lastNumber.includes('.')) {
+        document.getElementById('enter').value = currentValue + ".";
+    }
 }
 
 function pressOperator(operator) {
@@ -89,19 +174,3 @@ function pressMinus() { pressOperator('-'); }
 function pressPlus() { pressOperator('+'); }
 function pressPerCent() { pressOperator('%'); }
 function pressDivide() { pressOperator('/'); }
-
-
-function pressArrow() {
-    arrow = document.getElementById('enter').value;
-    if (arrow.length <= 1) {
-        document.getElementById('enter').value = "0";
-    }
-
-    if (document.getElementById('enter').value !== "0") {
-        let lastCharRemoved = arrow.slice(0, -1);
-        console.log(lastCharRemoved);
-        document.getElementById('enter').value = lastCharRemoved;
-    }
-}
-
-f

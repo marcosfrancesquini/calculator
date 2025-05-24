@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+    --calculator-bg: #2d3436;
+    --button-bg: #636e72;
+    --button-hover: #57606f;
+    --button-active: #2f3542;
+    --operator-bg: #ffa502;
+    --operator-hover: #e67e22;
+    --equal-bg: #27ae60;
+    --equal-hover: #2ecc71;
+    --display-bg: #1e272e;
+    --text-color: #f5f6fa;
+}
+
+body {
+    background: linear-gradient(135deg, #1e272e, #485460);
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-color);
+    position: relative;
+    padding: 2rem 0;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    /* Novo: posiciona acima da calculadora */
+    position: absolute;
+    top: 10%;
+    width: 100%;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+header h3 {
+    font-size: 0.9rem;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+#container {
+    background: var(--calculator-bg);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    width: 22rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
+    margin-top: 4rem;
+}
+
+.screen {
+    margin-bottom: 1.5rem;
+}
+
+#enter {
+    width: 100%;
+    padding: 1.2rem 1rem;
+    font-size: 2rem;
+    text-align: right;
+    background: var(--display-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.col {
+    flex: 1;
+}
+
+input[type="button"] {
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.3rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.5rem;
+    background: var(--button-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+input[type="button"]:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+input[type="button"]:active {
+    background: var(--button-active);
+    transform: translateY(0);
+}
+
+#clean,
+#percentage,
+#arrow,
+#plus,
+#minus,
+#times,
+#divide {
+    background: var(--operator-bg);
+}
+
+#clean:hover,
+#percentage:hover,
+#arrow:hover,
+#plus:hover,
+#minus:hover,
+#times:hover,
+#divide:hover {
+    background: var(--operator-hover);
+}
+
+#equal {
+    background: var(--equal-bg);
+}
+
+#equal:hover {
+    background: var(--equal-hover);
+}
+
+footer {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-top: 0;
+
+    /* Remove a margem anterior */
+    font-size: 0.8rem;
+    opacity: 0.7;
+
+    /* Novo: posiciona abaixo da calculadora */
+    position: absolute;
+    bottom: 10%; 
+    width: 100%;
+    text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 400px) {
+    #container {
+        width: 90%;
+        padding: 1.2rem;
+    }
+
+    input[type="button"] {
+        padding: 0.9rem 0;
+        font-size: 1.1rem;
+    }
+
+    #enter {
+        font-size: 1.8rem;
+        padding: 1rem;
+    }
+}
