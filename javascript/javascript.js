@@ -39,27 +39,79 @@ let sumOne, sumTwo, sumThree, sumFour, sumFive, sumSix, sumSeven, sumEight, sumN
 //     audios[numero]?.play().catch(e => console.log("Erro ao tocar áudio:", e));
 // }
 
-function playAudio(nome) {
-    const audio = new Audio(`audios/${nome}.mp3`);
-    audio.play().catch(e => console.log("Erro ao tocar:", e));
-}
+// carregar os audios por garantia e eficiencia
+// const audioCache = {};
+// Object.keys(botoes).forEach(id => {
+//     audioCache[botoes[id]] = new Audio(`audios/${botoes[id]}.mp3`);
+// });
 
-// Mapeamento dos botões para áudios
+// function playAudio(nome) {
+//     const audio = new Audio(`audios/${nome}.mp3`);
+//     audio.play().catch(e => console.log("Erro ao tocar:", e));
+// }
+
+// // Mapeamento dos botões para áudios
+// const botoes = {
+//     'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5',
+//     'six': '6', 'seven': '7', 'eight': '8', 'nine': '9', 'zero': '0',
+//     'plus': 'mais', 'minus': 'menos', 'times': 'multiplica',
+//     'divide': 'divide', 'equal': 'igual', 'clean': 'limpa',
+//     'percentage': 'porcento', 'neg_pos': 'negativo', 'period': 'ponto'
+// };
+
+// // Adiciona eventos de hover a todos os botões
+// Object.keys(botoes).forEach(id => {
+//     const botao = document.getElementById(id);
+//     if (botao) {
+//         botao.addEventListener('mouseenter', () => playAudio(botoes[id]));
+//     }
+// });
 const botoes = {
-    'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5',
-    'six': '6', 'seven': '7', 'eight': '8', 'nine': '9', 'zero': '0',
-    'plus': 'mais', 'minus': 'menos', 'times': 'multiplica',
-    'divide': 'divide', 'equal': 'igual', 'clean': 'limpa',
-    'percentage': 'porcento', 'neg_pos': 'negativo', 'period': 'ponto'
+    'one': '1', 
+    'two': '2', 
+    'three': '3', 
+    'four': '4', 
+    'five': '5',
+    'six': '6', 
+    'seven': '7', 
+    'eight': '8', 
+    'nine': '9', 
+    'zero': '0',
+    'plus': 'mais', 
+    'minus': 'menos', 
+    'times': 'multiplica',
+    'divide': 'divide', 
+    'equal': 'igual', 
+    'clean': 'limpa',
+    'percentage': 
+    'porcento', 
+    'neg_pos': 'negativo', 
+    'period': 'ponto',
+    'arrow': 'arrow'
 };
 
-// Adiciona eventos de hover a todos os botões
+// so p garantir
+const audioCache = {};
+Object.keys(botoes).forEach(id => {
+    audioCache[botoes[id]] = new Audio(`audios/${botoes[id]}.mp3`);
+});
+
+// play dos audios 
+function playAudio(nome) {
+    if (audioCache[nome]) {
+        audioCache[nome].currentTime = 0;
+        audioCache[nome].play().catch(e => console.log("Erro ao tocar:", e));
+    }
+}
+
+// addevent
 Object.keys(botoes).forEach(id => {
     const botao = document.getElementById(id);
     if (botao) {
         botao.addEventListener('mouseenter', () => playAudio(botoes[id]));
     }
 });
+
 function pressEqual() {
     try {
         let expression = document.getElementById('enter').value;
@@ -88,19 +140,19 @@ function pressNegativePositive() {
     let lastChar = value[value.length - 1];
     checkChars(value);
     console.log(checkChars(value));
-    
+
     if (value !== "" && value !== "0") {
         if (value.endsWith(')')) {
             inputElement.value = value.substring(2, value.length - 1);
         } else {
             if (!isNaN(lastChar) || lastChar === '.') {
-                console.log("!isNaN(lastChar)-> "+!isNaN(lastChar))
+                console.log("!isNaN(lastChar)-> " + !isNaN(lastChar))
                 inputElement.value = "-(" + value + ")";
             } else {
                 console.log("O último caractere não é um número.");
             }
         }
-    }   
+    }
 }
 
 function pressArrow() {
@@ -119,6 +171,7 @@ function pressArrow() {
 function pressPeriod() {
     let currentValue = document.getElementById('enter').value;
     let lastNumber = currentValue.split(/[+\-*/%]/).pop();
+    console.log(lastNumber);
     if (!lastNumber.includes('.')) {
         document.getElementById('enter').value = currentValue + ".";
     }
@@ -139,22 +192,12 @@ function pressNumber(number) {
     let typed = document.getElementById('enter').value;
     let lastChar = typed[typed.length - 1];
 
-    if (typed === "0") {
+    if (typed === "0" && number !== '.') { // Impede que o ponto seja adicionado se o valor atual for 0
         document.getElementById('enter').value = number;
-    } 
-    else {
-        // Esse regex aqui, verifica se o último caractere é um operador ou parêntese aberto
-        if (/[+\-*/(]/.test(lastChar)) {
-            document.getElementById('enter').value = typed + number;
-        }
-        else if (lastChar === '.') {
-            if (!typed.split(/[+\-*/]/).pop().includes('.')) {
-                document.getElementById('enter').value = typed + number;
-            }
-        }
-        else {
-            document.getElementById('enter').value = typed + number;
-        }
+    } else if (/[+\-*/(]/.test(lastChar) || lastChar === '.') { // Se o último caractere é um operador ou um ponto, apenas adicione o número
+        document.getElementById('enter').value = typed + number;
+    } else {
+        document.getElementById('enter').value = typed + number;
     }
 }
 
