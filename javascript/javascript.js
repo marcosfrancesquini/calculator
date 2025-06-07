@@ -1,102 +1,40 @@
 let total = 0;
 let greatTotal = 0;
-let one, two, three, four, five, six, seven, eight, nine, zero;
-let sumOne, sumTwo, sumThree, sumFour, sumFive, sumSix, sumSeven, sumEight, sumNine, sumZero;
-// let value = inputElement.value;
-// let lastChar = value[value.length - 1];
+// No longer need individual variables for numbers if using pressNumber function
+// let one, two, three, four, five, six, seven, eight, nine, zero;
+// let sumOne, sumTwo, sumThree, sumFour, sumFive, sumSix, sumSeven, sumEight, sumNine, sumZero;
 
-
-//parte do audio que fala
-
-// const botoes = {
-//     'one': 'um',
-//     'two': 'dois',
-//     'plus': 'mais',
-//     'equal': 'igual'
-//     // Adicione todos os outros...
-// };
-
-// // Aplica a todos os botões mapeados
-// Object.keys(botoes).forEach(id => {
-//     const botao = document.getElementById(id);
-//     if (botao) {
-//         botao.addEventListener('mouseenter', () => playAudio(botoes[id]));
-//     }
-// });
-
-// // function playAudio(numero) {
-// //     const audio = new Audio(`audios/${numero}.mp3`);
-// //     audio.play().catch(e => console.log("Erro ao tocar áudio:", e));
-// // }
-// // document.getElementById('one').addEventListener('mouseenter', () => playAudio('um'));
-
-// const audios = {};
-// Object.keys(botoes).forEach(id => {
-//     audios[botoes[id]] = new Audio(`audios/${botoes[id]}.mp3`);
-// });
-
-// function playAudio(numero) {
-//     audios[numero]?.play().catch(e => console.log("Erro ao tocar áudio:", e));
-// }
-
-// carregar os audios por garantia e eficiencia
-// const audioCache = {};
-// Object.keys(botoes).forEach(id => {
-//     audioCache[botoes[id]] = new Audio(`audios/${botoes[id]}.mp3`);
-// });
-
-// function playAudio(nome) {
-//     const audio = new Audio(`audios/${nome}.mp3`);
-//     audio.play().catch(e => console.log("Erro ao tocar:", e));
-// }
-
-// // Mapeamento dos botões para áudios
-// const botoes = {
-//     'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5',
-//     'six': '6', 'seven': '7', 'eight': '8', 'nine': '9', 'zero': '0',
-//     'plus': 'mais', 'minus': 'menos', 'times': 'multiplica',
-//     'divide': 'divide', 'equal': 'igual', 'clean': 'limpa',
-//     'percentage': 'porcento', 'neg_pos': 'negativo', 'period': 'ponto'
-// };
-
-// // Adiciona eventos de hover a todos os botões
-// Object.keys(botoes).forEach(id => {
-//     const botao = document.getElementById(id);
-//     if (botao) {
-//         botao.addEventListener('mouseenter', () => playAudio(botoes[id]));
-//     }
-// });
 const botoes = {
-    'one': '1', 
-    'two': '2', 
-    'three': '3', 
-    'four': '4', 
+    'one': '1',
+    'two': '2',
+    'three': '3',
+    'four': '4',
     'five': '5',
-    'six': '6', 
-    'seven': '7', 
-    'eight': '8', 
-    'nine': '9', 
+    'six': '6',
+    'seven': '7',
+    'eight': '8',
+    'nine': '9',
     'zero': '0',
-    'plus': 'mais', 
-    'minus': 'menos', 
+    'plus': 'mais',
+    'minus': 'menos',
     'times': 'multiplica',
-    'divide': 'divide', 
-    'equal': 'igual', 
+    'divide': 'divide',
+    'equal': 'igual',
     'clean': 'limpa',
-    'percentage': 
-    'porcento', 
-    'neg_pos': 'negativo', 
+    'percentage':
+        'porcento',
+    'neg_pos': 'negativo',
     'period': 'ponto',
-    'arrow': 'arrow'
+    'arrow': 'apagar' // Changed 'arrow' to 'apagar' for better audio context
 };
 
-// so p garantir
 const audioCache = {};
 Object.keys(botoes).forEach(id => {
     audioCache[botoes[id]] = new Audio(`audios/${botoes[id]}.mp3`);
+    audioCache[botoes[id]].load(); // Force pre-loading
 });
 
-// play dos audios 
+// play dos audios
 function playAudio(nome) {
     if (audioCache[nome]) {
         audioCache[nome].currentTime = 0;
@@ -115,87 +53,105 @@ Object.keys(botoes).forEach(id => {
 function pressEqual() {
     try {
         let expression = document.getElementById('enter').value;
-        expression = expression.replace(/%/g, '/100');
-        document.getElementById('enter').value = eval(expression) || '0';
-    } catch {
-        document.getElementById('enter').value = 'Erro';
-    }
-}
+        // Replace 'x' with '*' for multiplication if it's not already handled in HTML
+        expression = expression.replace(/x/g, '*');
+        expression = expression.replace(/%/g, '/100'); // Handle percentage correctly
 
-function checkChars(str) {
-    const strToString = (str.split(''));
-    const reversedString = strToString.reverse();
-    console.log(reversedString);
+        // Evaluate the expression and update the display
+        let result = eval(expression);
+        if (result === Infinity || isNaN(result)) {
+            document.getElementById('enter').value = 'Erro';
+        } else {
+            document.getElementById('enter').value = result;
+        }
+    } catch (e) {
+        document.getElementById('enter').value = 'Erro';
+        console.error("Calculation error:", e);
+    }
 }
 
 function clean() {
     document.getElementById('enter').value = '0';
-    let total = 0;
-    let greatTotal = 0;
+    total = 0; // Reset total
+    greatTotal = 0; // Reset greatTotal
 }
 
 function pressNegativePositive() {
     let inputElement = document.getElementById('enter');
     let value = inputElement.value;
-    let lastChar = value[value.length - 1];
-    checkChars(value);
-    console.log(checkChars(value));
 
-    if (value !== "" && value !== "0") {
-        if (value.endsWith(')')) {
-            inputElement.value = value.substring(2, value.length - 1);
-        } else {
-            if (!isNaN(lastChar) || lastChar === '.') {
-                console.log("!isNaN(lastChar)-> " + !isNaN(lastChar))
-                inputElement.value = "-(" + value + ")";
-            } else {
-                console.log("O último caractere não é um número.");
-            }
-        }
+    if (value === "" || value === "0" || value === "Erro") {
+        return; // Do nothing if display is empty, 0, or error
+    }
+
+    // If the value is currently negative (e.g., "-(123)"), remove the wrapping
+    if (value.startsWith('-(') && value.endsWith(')')) {
+        inputElement.value = value.substring(2, value.length - 1);
+    } else {
+        // Otherwise, wrap the current value in "-(...)"
+        inputElement.value = "-(" + value + ")";
     }
 }
 
+
 function pressArrow() {
-    arrow = document.getElementById('enter').value;
-    if (arrow.length <= 1) {
-        document.getElementById('enter').value = "0";
+    let currentValue = document.getElementById('enter').value;
+    if (currentValue === "0" || currentValue === "Erro") {
+        return; // No action if already 0 or error
     }
 
-    if (document.getElementById('enter').value !== "0") {
-        let lastCharRemoved = arrow.slice(0, -1);
-        console.log(lastCharRemoved);
-        document.getElementById('enter').value = lastCharRemoved;
+    if (currentValue.length <= 1) {
+        document.getElementById('enter').value = "0";
+    } else {
+        document.getElementById('enter').value = currentValue.slice(0, -1);
     }
 }
 
 function pressPeriod() {
     let currentValue = document.getElementById('enter').value;
-    let lastNumber = currentValue.split(/[+\-*/%]/).pop();
-    console.log(lastNumber);
-    if (!lastNumber.includes('.')) {
+    let lastNumberMatch = currentValue.match(/(\d+\.?\d*)$/); // Regex to find the last number (including existing decimal)
+
+    // If there's a last number and it doesn't already contain a decimal, add one
+    if (lastNumberMatch && !lastNumberMatch[0].includes('.')) {
         document.getElementById('enter').value = currentValue + ".";
+    } else if (!lastNumberMatch && currentValue === "0") {
+        // If it's '0' and no number yet, allow '0.'
+        document.getElementById('enter').value = "0.";
+    }
+    // If the last character is an operator, add '0.' for new number
+    else if (/[+\-*/%]/.test(currentValue[currentValue.length - 1])) {
+        document.getElementById('enter').value = currentValue + "0.";
     }
 }
 
 function pressOperator(operator) {
     let currentValue = document.getElementById('enter').value;
     let lastChar = currentValue[currentValue.length - 1];
-    if (currentValue !== "0" && !/[+\-*/%]/.test(lastChar)) {
-        document.getElementById('enter').value = currentValue + operator;
+
+    if (currentValue === "Erro") {
+        document.getElementById('enter').value = "0"; // Reset if there was an error
+        return;
     }
-    else if (/[+\-*/%]/.test(lastChar)) {
+
+    // If the last character is already an operator, replace it
+    if (/[+\-*/%]/.test(lastChar)) {
         document.getElementById('enter').value = currentValue.slice(0, -1) + operator;
+    }
+    // If the display is '0' and operator is not percent, start with '0' + operator
+    else if (currentValue === "0" && operator !== '%') {
+        document.getElementById('enter').value = "0" + operator;
+    }
+    // Otherwise, just append the operator
+    else {
+        document.getElementById('enter').value = currentValue + operator;
     }
 }
 
 function pressNumber(number) {
     let typed = document.getElementById('enter').value;
-    let lastChar = typed[typed.length - 1];
 
-    if (typed === "0" && number !== '.') { // Impede que o ponto seja adicionado se o valor atual for 0
+    if (typed === "0" || typed === "Erro") {
         document.getElementById('enter').value = number;
-    } else if (/[+\-*/(]/.test(lastChar) || lastChar === '.') { // Se o último caractere é um operador ou um ponto, apenas adicione o número
-        document.getElementById('enter').value = typed + number;
     } else {
         document.getElementById('enter').value = typed + number;
     }
@@ -217,3 +173,52 @@ function pressMinus() { pressOperator('-'); }
 function pressPlus() { pressOperator('+'); }
 function pressPerCent() { pressOperator('%'); }
 function pressDivide() { pressOperator('/'); }
+
+// --- Accessibility Features JavaScript ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    const calculatorContainer = document.getElementById('container');
+    const visibilitySlider = document.getElementById('visibility-slider');
+    const zoomSlider = document.getElementById('zoom-slider');
+    const highContrastToggle = document.getElementById('high-contrast-toggle');
+    const body = document.body;
+
+    // 1. Visibility (Opacity) Control
+    if (visibilitySlider && calculatorContainer) {
+        visibilitySlider.addEventListener('input', (event) => {
+            calculatorContainer.style.opacity = event.target.value;
+        });
+    }
+
+    // 2. Zoom (Scale) Control
+    if (zoomSlider && calculatorContainer) {
+        zoomSlider.addEventListener('input', (event) => {
+            const scaleValue = event.target.value;
+            // Apply scale transformation to the container
+            calculatorContainer.style.transform = `scale(${scaleValue})`;
+            calculatorContainer.style.transformOrigin = 'center center'; // Scale from the center
+
+            // Adjust margins or positioning if needed due to scaling to keep it centered
+            // This might require more complex calculations depending on layout.
+            // For now, relying on flexbox centering in body CSS.
+        });
+    }
+
+    // 3. High Contrast Toggle
+    if (highContrastToggle && body) {
+        highContrastToggle.addEventListener('click', () => {
+            body.classList.toggle('high-contrast');
+            // Store preference in localStorage (optional)
+            if (body.classList.contains('high-contrast')) {
+                localStorage.setItem('highContrastMode', 'enabled');
+            } else {
+                localStorage.removeItem('highContrastMode');
+            }
+        });
+
+        // Check for saved preference on page load
+        if (localStorage.getItem('highContrastMode') === 'enabled') {
+            body.classList.add('high-contrast');
+        }
+    }
+});

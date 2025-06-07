@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculaora</title>
+    <title>Calculadora</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -12,16 +12,31 @@
     <header>
         <h1>Calculadora Básica</h1>
         <h3>Recursos de Acessibilidade</h3>
+
+        <div class="accessibility-controls">
+            <div class="control-group">
+                <label for="visibility-slider">Visibility:</label>
+                <input type="range" id="visibility-slider" min="0.2" max="1" step="0.05" value="1">
+            </div>
+            <div class="control-group">
+                <label for="zoom-slider">Zoom:</label>
+                <input type="range" id="zoom-slider" min="0.7" max="1.3" step="0.05" value="1">
+            </div>
+            <div class="control-group">
+                <button id="high-contrast-toggle">High Contrast</button>
+            </div>
+        </div> 
     </header>
 
+    
     <div id='container'>
 
-        <div class='screen'><input id='enter' type="text" name="getnumber" id="getnumber" value="0"></div>
+        <div class='screen'><input id='enter' type="text" name="getnumber" id="getnumber" value="0" readonly></div>
 
         <div class='row'>
             <div class='col'><input id='clean' type="button" value="CE" onclick='clean()'></div>
             <div class='col'><input id='percentage' type="button" value="%" onclick='pressPerCent()'></div>
-            <div class='col'><input id='arrow' type="button" value=&larr; onclick='pressArrow()'></div>
+            <div class='col'><input id='arrow' type="button" value="&larr;" onclick='pressArrow()'></div>
             <div class='col'><input id='plus' type="button" value="+" onclick='pressPlus()'></div>
         </div>
         <div class='row'>
@@ -40,11 +55,11 @@
             <div class='col'><input id='one' type="button" value="1" onclick='pressOne()'></div>
             <div class='col'><input id='two' type="button" value="2" onclick='pressTwo()'></div>
             <div class='col'><input id='three' type="button" value="3" onclick='pressThree()'></div>
-            <div class='col'><input id='divide' type="button" value=&divide; onclick='pressDivide()'></div>
+            <div class='col'><input id='divide' type="button" value="&divide;" onclick='pressDivide()'></div>
         </div>
         <div class='row'>
             <div class='col'><input id='zero' type="button" value="0" onclick='pressZero()'></div>
-            <div class='col'><input id='neg_pos' type="button" value=&plusmn; onclick='pressNegativePositive()'></div>
+            <div class='col'><input id='neg_pos' type="button" value="&plusmn;" onclick='pressNegativePositive()'></div>
             <div class='col'><input id='period' type="button" value="." onclick='pressPeriod()'></div>
             <div class='col'><input id='equal' type="button" value="=" onclick='pressEqual()'></div>
         </div>

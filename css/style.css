@@ -31,7 +31,7 @@ header {
     margin-bottom: 1.5rem;
     text-align: center;
     margin-bottom: 1.5rem;
-    /* Novo: posiciona acima da calculadora */
+    /* Novo: posiciona acima da calculadora se funciona*/
     position: absolute;
     top: 10%;
     width: 100%;
@@ -167,4 +167,170 @@ footer {
         font-size: 1.8rem;
         padding: 1rem;
     }
+}
+
+/* ... (existing CSS) ... */
+
+.accessibility-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--calculator-bg);
+    border-radius: 0.8rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    width: 22rem; /* Match calculator width */
+    position: relative;
+    z-index: 1; /* Ensure it's above other elements if needed */
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.accessibility-controls label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    width: 60px; /* Adjust as needed for alignment */
+}
+
+.accessibility-controls input[type="range"] {
+    flex-grow: 1;
+    -webkit-appearance: none;
+    height: 8px;
+    background: var(--button-bg);
+    border-radius: 5px;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+
+.accessibility-controls input[type="range"]:hover {
+    opacity: 1;
+}
+
+.accessibility-controls input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--operator-bg);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.accessibility-controls input[type="range"]::-webkit-slider-thumb:hover {
+    background: var(--operator-hover);
+}
+
+.accessibility-controls button {
+    background: var(--equal-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    width: 100%;
+}
+
+.accessibility-controls button:hover {
+    background: var(--equal-hover);
+    transform: translateY(-2px);
+}
+
+.accessibility-controls button:active {
+    background: var(--button-active);
+    transform: translateY(0);
+}
+
+/* High Contrast Mode Styles */
+body.high-contrast {
+    background: #000 !important; /* Pure black background */
+    color: #fff !important;      /* Pure white text */
+}
+
+body.high-contrast #container {
+    background: #333 !important; /* Darker background for calculator */
+    box-shadow: 0 1rem 2rem rgba(255, 255, 255, 0.3) !important; /* White shadow */
+}
+
+body.high-contrast .accessibility-controls {
+    background: #333 !important;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.2) !important;
+}
+
+body.high-contrast #enter {
+    background: #000 !important;
+    color: #0f0 !important; /* Bright green text for display */
+    border: 1px solid #0f0 !important;
+}
+
+body.high-contrast input[type="button"] {
+    background: #eee !important; /* Lighter buttons */
+    color: #000 !important;     /* Black text on buttons */
+    border: 1px solid #000 !important;
+}
+
+body.high-contrast input[type="button"]:hover {
+    background: #fff !important; /* Even lighter on hover */
+}
+
+body.high-contrast #clean,
+body.high-contrast #percentage,
+body.high-contrast #arrow,
+body.high-contrast #plus,
+body.high-contrast #minus,
+body.high-contrast #times,
+body.high-contrast #divide {
+    background: #ff0 !important; /* Bright yellow for operators */
+    color: #000 !important;
+    border: 1px solid #000 !important;
+}
+
+body.high-contrast #clean:hover,
+body.high-contrast #percentage:hover,
+body.high-contrast #arrow:hover,
+body.high-contrast #plus:hover,
+body.high-contrast #minus:hover,
+body.high-contrast #times:hover,
+body.high-contrast #divide:hover {
+    background: #ffff66 !important; /* Lighter yellow on hover */
+}
+
+body.high-contrast #equal {
+    background: #0ff !important; /* Bright cyan for equals button */
+    color: #000 !important;
+    border: 1px solid #000 !important;
+}
+
+body.high-contrast #equal:hover {
+    background: #66ffff !important; /* Lighter cyan on hover */
+}
+
+body.high-contrast .accessibility-controls input[type="range"]::-webkit-slider-thumb {
+    background: #0f0 !important; /* Green thumb for sliders */
+}
+
+body.high-contrast .accessibility-controls button {
+    background: #0ff !important; /* Cyan button for contrast toggle */
+    color: #000 !important;
+}
+
+body.high-contrast .accessibility-controls button:hover {
+    background: #66ffff !important;
+}
+
+/* Ensure header and footer visibility in high contrast */
+body.high-contrast header h1,
+body.high-contrast header h3,
+body.high-contrast footer {
+    color: #fff !important;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add subtle shadow for better contrast */
 }

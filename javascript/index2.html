@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Exemplo Animação WebKit</title>
+<style>
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+.box:hover {
+  animation: box-animation 0.5s ease-in-out infinite alternate; /* Definição da animação */
+}
+
+@keyframes box-animation {
+  0% {
+    background-color: lightblue;
+    transform: scale(1);
+  }
+  50% {
+    background-color: lightgreen;
+    transform: scale(1.2);
+  }
+  100% {
+    background-color: lightblue;
+    transform: scale(1);
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="box">Clique para animar!</div>
+
+</body>
+</html>
