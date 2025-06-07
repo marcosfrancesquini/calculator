@@ -1,6 +1,5 @@
 let total = 0;
 let greatTotal = 0;
-// No longer need individual variables for numbers if using pressNumber function
 // let one, two, three, four, five, six, seven, eight, nine, zero;
 // let sumOne, sumTwo, sumThree, sumFour, sumFive, sumSix, sumSeven, sumEight, sumNine, sumZero;
 
@@ -157,6 +156,47 @@ function pressNumber(number) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const calculatorContainer = document.getElementById('container');
+    const visibilitySlider = document.getElementById('visibility-slider');
+    const zoomSlider = document.getElementById('zoom-slider');
+    const highContrastToggle = document.getElementById('high-contrast-toggle');
+    const body = document.body;
+
+    // Aula do Wellington de acessibilidade
+    if (visibilitySlider && calculatorContainer) {
+        visibilitySlider.addEventListener('input', (event) => {
+            calculatorContainer.style.opacity = event.target.value;
+        });
+    }
+
+
+    if (zoomSlider && calculatorContainer) {
+        zoomSlider.addEventListener('input', (event) => {
+            const scaleValue = event.target.value;
+            calculatorContainer.style.transform = `scale(${scaleValue})`;
+            calculatorContainer.style.transformOrigin = 'center center'; // Scale from the center
+        });
+    }
+
+    // Contraste
+    if (highContrastToggle && body) {
+        highContrastToggle.addEventListener('click', () => {
+            body.classList.toggle('high-contrast');
+            // Usando localStorage mesmo
+            if (body.classList.contains('high-contrast')) {
+                localStorage.setItem('highContrastMode', 'enabled');
+            } else {
+                localStorage.removeItem('highContrastMode');
+            }
+        });
+
+        if (localStorage.getItem('highContrastMode') === 'enabled') {
+            body.classList.add('high-contrast');
+        }
+    }
+});
+
 function pressOne() { pressNumber('1'); };
 function pressTwo() { pressNumber('2'); };
 function pressThree() { pressNumber('3'); };
@@ -174,51 +214,10 @@ function pressPlus() { pressOperator('+'); }
 function pressPerCent() { pressOperator('%'); }
 function pressDivide() { pressOperator('/'); }
 
-// --- Accessibility Features JavaScript ---
-
-document.addEventListener('DOMContentLoaded', () => {
-    const calculatorContainer = document.getElementById('container');
-    const visibilitySlider = document.getElementById('visibility-slider');
-    const zoomSlider = document.getElementById('zoom-slider');
-    const highContrastToggle = document.getElementById('high-contrast-toggle');
-    const body = document.body;
-
-    // 1. Visibility (Opacity) Control
-    if (visibilitySlider && calculatorContainer) {
-        visibilitySlider.addEventListener('input', (event) => {
-            calculatorContainer.style.opacity = event.target.value;
-        });
-    }
-
-    // 2. Zoom (Scale) Control
-    if (zoomSlider && calculatorContainer) {
-        zoomSlider.addEventListener('input', (event) => {
-            const scaleValue = event.target.value;
-            // Apply scale transformation to the container
-            calculatorContainer.style.transform = `scale(${scaleValue})`;
-            calculatorContainer.style.transformOrigin = 'center center'; // Scale from the center
-
-            // Adjust margins or positioning if needed due to scaling to keep it centered
-            // This might require more complex calculations depending on layout.
-            // For now, relying on flexbox centering in body CSS.
-        });
-    }
-
-    // 3. High Contrast Toggle
-    if (highContrastToggle && body) {
-        highContrastToggle.addEventListener('click', () => {
-            body.classList.toggle('high-contrast');
-            // Store preference in localStorage (optional)
-            if (body.classList.contains('high-contrast')) {
-                localStorage.setItem('highContrastMode', 'enabled');
-            } else {
-                localStorage.removeItem('highContrastMode');
-            }
-        });
-
-        // Check for saved preference on page load
-        if (localStorage.getItem('highContrastMode') === 'enabled') {
-            body.classList.add('high-contrast');
-        }
-    }
-});
+// if ('speechSynthesis' in window) {
+//     var resultado = 10 + 5; // Exemplo de cálculo
+//     var utterance = new SpeechSynthesisUtterance(resultado.toString()); // Transforma o resultado em texto
+//     window.speechSynthesis.speak(utterance); // Fala o texto
+// } else {
+//     alert("Este navegador não suporta a Web Speech API.");
+// }
