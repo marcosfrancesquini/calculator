@@ -63,6 +63,12 @@ function pressEqual() {
         } else {
             document.getElementById('enter').value = result;
         }
+        if ('speechSynthesis' in window) {
+            var utterance = new SpeechSynthesisUtterance(result.toString());
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Este navegador não suporta a Web Speech API.");
+        }
     } catch (e) {
         document.getElementById('enter').value = 'Erro';
         console.error("Calculation error:", e);
@@ -214,10 +220,9 @@ function pressPlus() { pressOperator('+'); }
 function pressPerCent() { pressOperator('%'); }
 function pressDivide() { pressOperator('/'); }
 
-// if ('speechSynthesis' in window) {
-//     var resultado = 10 + 5; // Exemplo de cálculo
-//     var utterance = new SpeechSynthesisUtterance(resultado.toString()); // Transforma o resultado em texto
-//     window.speechSynthesis.speak(utterance); // Fala o texto
-// } else {
-//     alert("Este navegador não suporta a Web Speech API.");
-// }
+if ('speechSynthesis' in window) {
+    var utterance = new SpeechSynthesisUtterance(resultado.toString());
+    window.speechSynthesis.speak(utterance);
+} else {
+    alert("Este navegador não suporta a Web Speech API.");
+}
