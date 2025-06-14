@@ -31,7 +31,7 @@ header {
     margin-bottom: 1.5rem;
     text-align: center;
     margin-bottom: 1.5rem;
-    /* Novo: posiciona acima da calculadora se funciona*/
+    /* posiciona acima da calculadora se funciona*/
     position: absolute;
     top: 10%;
     width: 100%;

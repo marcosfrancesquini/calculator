@@ -20,8 +20,9 @@ audios = {
     # "igual.mp3": "igual a",
     # "limpa.mp3": "limpar",
     # "ponto.mp3": "ponto",
-    # "negativo.mp3": "negativo positivo",
-    # "arrow.mp3": "corrigi"
+    "negativo.mp3": "negativo ou positivo",
+    # "arrow.mp3": "apagar",
+
 }
 
 os.makedirs("audios", exist_ok=True)

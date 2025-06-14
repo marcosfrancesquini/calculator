@@ -20,17 +20,16 @@ const botoes = {
     'divide': 'divide',
     'equal': 'igual',
     'clean': 'limpa',
-    'percentage':
-        'porcento',
+    'percentage': 'porcento',
     'neg_pos': 'negativo',
     'period': 'ponto',
-    'arrow': 'apagar' // Changed 'arrow' to 'apagar' for better audio context
+    'arrow': 'apagar'
 };
 
 const audioCache = {};
 Object.keys(botoes).forEach(id => {
     audioCache[botoes[id]] = new Audio(`audios/${botoes[id]}.mp3`);
-    audioCache[botoes[id]].load(); // Force pre-loading
+    audioCache[botoes[id]].load(); // Forca o pre-loading dos audios, revisar isso
 });
 
 // play dos audios
@@ -41,30 +40,43 @@ function playAudio(nome) {
     }
 }
 
-// addevent
 Object.keys(botoes).forEach(id => {
     const botao = document.getElementById(id);
     if (botao) {
-        botao.addEventListener('mouseenter', () => playAudio(botoes[id]));
+        let timeoutId;
+
+        botao.addEventListener('mouseenter', () => {
+            timeoutId = setTimeout(() => {
+                playAudio(botoes[id]); 
+            }, 500);
+        });
+
+        botao.addEventListener('mouseleave', () => {
+            clearTimeout(timeoutId);
+        });
     }
 });
 
 function pressEqual() {
     try {
         let expression = document.getElementById('enter').value;
-        // Replace 'x' with '*' for multiplication if it's not already handled in HTML
-        expression = expression.replace(/x/g, '*');
-        expression = expression.replace(/%/g, '/100'); // Handle percentage correctly
+        
+        expression = expression.replace(/x/g, '*'); // * no lugar do x para calculo
+        expression = expression.replace(/%/g, '/100'); // porcentagem, ja divide
 
-        // Evaluate the expression and update the display
         let result = eval(expression);
+        result = parseFloat(result.toFixed(2));
         if (result === Infinity || isNaN(result)) {
             document.getElementById('enter').value = 'Erro';
         } else {
             document.getElementById('enter').value = result;
         }
         if ('speechSynthesis' in window) {
-            var utterance = new SpeechSynthesisUtterance(result.toString());
+          //  if (result="Erro") {
+             //   var utterance = new SpeechSynthesisUtterance(result);
+          //  } else {
+                var utterance = new SpeechSynthesisUtterance(result.toString());
+        //    }
             window.speechSynthesis.speak(utterance);
         } else {
             alert("Este navegador não suporta a Web Speech API.");
@@ -79,30 +91,28 @@ function clean() {
     document.getElementById('enter').value = '0';
     total = 0; // Reset total
     greatTotal = 0; // Reset greatTotal
+    //Obs, acrescentar memoria com essas variaveis
 }
 
-function pressNegativePositive() {
-    let inputElement = document.getElementById('enter');
-    let value = inputElement.value;
+// function pressNegativePositive() {
+//     let inputElement = document.getElementById('enter');
+//     let value = inputElement.value;
 
-    if (value === "" || value === "0" || value === "Erro") {
-        return; // Do nothing if display is empty, 0, or error
-    }
-
-    // If the value is currently negative (e.g., "-(123)"), remove the wrapping
-    if (value.startsWith('-(') && value.endsWith(')')) {
-        inputElement.value = value.substring(2, value.length - 1);
-    } else {
-        // Otherwise, wrap the current value in "-(...)"
-        inputElement.value = "-(" + value + ")";
-    }
-}
+//     if (value === "" || value === "0" || value === "Erro") {
+//         return; //nao negativa nessas condicoes acima
+//     }
+//     if (value.startsWith('-(') && value.endsWith(')')) {
+//         inputElement.value = value.substring(2, value.length - 1);
+//     } else {        
+//         inputElement.value = "-(" + value + ")";
+//     }
+// }
 
 
 function pressArrow() {
     let currentValue = document.getElementById('enter').value;
     if (currentValue === "0" || currentValue === "Erro") {
-        return; // No action if already 0 or error
+        return; //se erro ou zero, faz nada, nada faz
     }
 
     if (currentValue.length <= 1) {
@@ -114,16 +124,15 @@ function pressArrow() {
 
 function pressPeriod() {
     let currentValue = document.getElementById('enter').value;
-    let lastNumberMatch = currentValue.match(/(\d+\.?\d*)$/); // Regex to find the last number (including existing decimal)
+    let lastNumberMatch = currentValue.match(/(\d+\.?\d*)$/); // "Regex para encontrar o último número com decimal se tiver
 
-    // If there's a last number and it doesn't already contain a decimal, add one
+
     if (lastNumberMatch && !lastNumberMatch[0].includes('.')) {
         document.getElementById('enter').value = currentValue + ".";
     } else if (!lastNumberMatch && currentValue === "0") {
-        // If it's '0' and no number yet, allow '0.'
         document.getElementById('enter').value = "0.";
     }
-    // If the last character is an operator, add '0.' for new number
+  
     else if (/[+\-*/%]/.test(currentValue[currentValue.length - 1])) {
         document.getElementById('enter').value = currentValue + "0.";
     }
@@ -134,20 +143,17 @@ function pressOperator(operator) {
     let lastChar = currentValue[currentValue.length - 1];
 
     if (currentValue === "Erro") {
-        document.getElementById('enter').value = "0"; // Reset if there was an error
+        document.getElementById('enter').value = "0"; // Reseta erro
         return;
     }
 
-    // If the last character is already an operator, replace it
+    // Substitui o caractere se ja for um operador matematico
     if (/[+\-*/%]/.test(lastChar)) {
         document.getElementById('enter').value = currentValue.slice(0, -1) + operator;
     }
-    // If the display is '0' and operator is not percent, start with '0' + operator
     else if (currentValue === "0" && operator !== '%') {
         document.getElementById('enter').value = "0" + operator;
-    }
-    // Otherwise, just append the operator
-    else {
+    } else {
         document.getElementById('enter').value = currentValue + operator;
     }
 }
@@ -169,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const highContrastToggle = document.getElementById('high-contrast-toggle');
     const body = document.body;
 
-    // Aula do Wellington de acessibilidade
+    // Aula do Wellington de acessibilidade adaptando para zoom também
     if (visibilitySlider && calculatorContainer) {
         visibilitySlider.addEventListener('input', (event) => {
             calculatorContainer.style.opacity = event.target.value;
@@ -181,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         zoomSlider.addEventListener('input', (event) => {
             const scaleValue = event.target.value;
             calculatorContainer.style.transform = `scale(${scaleValue})`;
-            calculatorContainer.style.transformOrigin = 'center center'; // Scale from the center
+            calculatorContainer.style.transformOrigin = 'center center'; // Finalmente escalou corretamente lambrar que tem que ser do centro
         });
     }
 
@@ -189,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (highContrastToggle && body) {
         highContrastToggle.addEventListener('click', () => {
             body.classList.toggle('high-contrast');
-            // Usando localStorage mesmo
+            // Usando localStorage mesmo, meio gambiarra mas funciona
             if (body.classList.contains('high-contrast')) {
                 localStorage.setItem('highContrastMode', 'enabled');
             } else {
@@ -219,10 +225,3 @@ function pressMinus() { pressOperator('-'); }
 function pressPlus() { pressOperator('+'); }
 function pressPerCent() { pressOperator('%'); }
 function pressDivide() { pressOperator('/'); }
-
-if ('speechSynthesis' in window) {
-    var utterance = new SpeechSynthesisUtterance(resultado.toString());
-    window.speechSynthesis.speak(utterance);
-} else {
-    alert("Este navegador não suporta a Web Speech API.");
-}
